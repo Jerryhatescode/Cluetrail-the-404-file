@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - Trending Cases</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Admin Panel</h2>
+    <nav>
+      <a href="#" class="menu-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="menu-item" data-page="post-case"><i class="fas fa-plus-square"></i> Post Case</a>
+      <a href="#" class="menu-item" data-page="manage-cases"><i class="fas fa-briefcase"></i> Manage Cases</a>
+      <a href="#" class="menu-item" data-page="users"><i class="fas fa-users"></i> Users</a>
+      <a href="#" class="menu-item" data-page="comments"><i class="fas fa-comments"></i> Comments</a>
+    </nav>
+    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </aside>
+
+  <main>
+    <header>
+      <h1>Cases Admin</h1>
+    </header>
+
+    <!-- Dashboard -->
+    <section class="page active" id="dashboard">
+      <div class="stats">
+        <div class="stat-card">
+          <h3 id="activeCasesCount">120</h3>
+          <p>Active Cases</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="solvedCasesCount">75</h3>
+          <p>Solved Cases</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="usersLoggedIn">45</h3>
+          <p>Users Logged In</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="commentsReceived">230</h3>
+          <p>Comments Received</p>
+        </div>
+      </div>
+
+      <div class="recent-cases">
+        <h2>Newly Added Cases</h2>
+        <div class="case-item">
+          <img src="https://placehold.co/60x60" alt="Case Image" />
+          <div class="case-info">
+            <h4>Case Title One</h4>
+            <small>Added 1 hour ago</small>
+          </div>
+          <span class="status active">Active</span>
+        </div>
+        <div class="case-item">
+          <img src="https://placehold.co/60x60" alt="Case Image" />
+          <div class="case-info">
+            <h4>Case Title Two</h4>
+            <small>Added 3 hours ago</small>
+          </div>
+          <span class="status solved">Solved</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Post Case -->
+    <section class="page" id="post-case">
+      <h2>Post New Case</h2>
+      <form id="postCaseForm">
+        <div class="form-group">
+          <label for="caseTitle">Case Title</label>
+          <input type="text" id="caseTitle" required />
+        </div>
+        <div class="form-group">
+          <label for="caseDescription">Description</label>
+          <textarea id="caseDescription" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="caseImage">Image</label>
+          <input type="file" id="caseImage" accept="image/*" />
+        </div>
+        <button type="submit">Post Case</button>
+      </form>
+    </section>
+
+    <!-- Manage Cases -->
+    <section class="page" id="manage-cases">
+      <h2>Manage Cases</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="casesTableBody">
+          <!-- Dynamic data -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Users -->
+    <section class="page" id="users">
+      <h2>Active Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Last Login</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+          <!-- Dynamic data -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Comments -->
+    <section class="page" id="comments">
+      <h2>User Comments</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Comment</th>
+            <th>Case</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="commentsTableBody">
+          <!-- Dynamic data -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+     <script>
+    // Navigation
+    const menuItems = document.querySelectorAll('.menu-item');
+    const pages = document.querySelectorAll('.page');
+
+    menuItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        menuItems.forEach(i => i.classList.remove('active'));
+        pages.forEach(p => p.classList.remove('active'));
+        item.classList.add('active');
+        const pageId = item.getAttribute('data-page');
+        document.getElementById(pageId).classList.add('active');
+      });
+    });
+
+    // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      alert('Logged out successfully!');
+      // window.location.href = 'login.html';
+    });
+
+    // Post case form submission (dummy for now)
+    document.getElementById('postCaseForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Case posted successfully!');
+      e.target.reset();
+    });
+
+    // Load dynamic data from backend
+    async function loadData() {
+      try {
+        const [casesRes, usersRes, commentsRes] = await Promise.all([
+          fetch('/api/cases'),
+          fetch('/api/users'),
+          fetch('/api/comments')
+        ]);
+
+        const cases = await casesRes.json();
+        const users = await usersRes.json();
+        const comments = await commentsRes.json();
+
+        // Populate Cases Table
+        const casesTable = document.getElementById('casesTableBody');
+        casesTable.innerHTML = "";
+        cases.forEach(c => {
+          casesTable.innerHTML += `
+            <tr>
+              <td>${c.title}</td>
+              <td>${c.status}</td>
+              <td>${c.date_added}</td>
+              <td>
+                <button class="action-btn edit">Edit</button>
+                <button class="action-btn delete">Delete</button>
+              </td>
+            </tr>`;
+        });
+
+        // Dashboard stats
+        document.getElementById('activeCasesCount').innerText =
+          cases.filter(c => c.status === "Active").length;
+        document.getElementById('solvedCasesCount').innerText =
+          cases.filter(c => c.status === "Solved").length;
+        document.getElementById('commentsReceived').innerText = comments.length;
+        document.getElementById('usersLoggedIn').innerText = users.length;
+
+        // Recent cases (last 3)
+        const recentCasesDiv = document.getElementById('recentCases');
+        recentCasesDiv.innerHTML = "";
+        cases.slice(-3).forEach(c => {
+          recentCasesDiv.innerHTML += `
+            <div class="case-item">
+              <img src="https://placehold.co/60x60" alt="Case Image" />
+              <div class="case-info">
+                <h4>${c.title}</h4>
+                <small>${c.date_added}</small>
+              </div>
+              <span class="status ${c.status.toLowerCase()}">${c.status}</span>
+            </div>`;
+        });
+
+        // Users table
+        const usersTable = document.getElementById('usersTableBody');
+        usersTable.innerHTML = "";
+        users.forEach(u => {
+          usersTable.innerHTML += `
+            <tr>
+              <td>${u.name}</td>
+              <td>${u.email}</td>
+              <td>${u.last_login}</td>
+            </tr>`;
+        });
+
+        // Comments table
+        const commentsTable = document.getElementById('commentsTableBody');
+        commentsTable.innerHTML = "";
+        comments.forEach(c => {
+          commentsTable.innerHTML += `
+            <tr>
+              <td>${c.user}</td>
+              <td>${c.comment}</td>
+              <td>${c.case}</td>
+              <td>${c.date}</td>
+            </tr>`;
+        });
+      } catch (err) {
+        console.error("Error loading admin data:", err);
+      }
+    }
+
+    
+    window.onload = loadData;
+  </script>
+</body>
+</html>

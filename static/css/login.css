@@ -1,0 +1,138 @@
+/* Page background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1b;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Login box */
+.login-container {
+    background-color: #1a1a1b;
+    padding: 20px;
+    width: 380px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Title */
+.login-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* Agreement text */
+.agreement-text {
+    font-size: 15px;
+    color: #d7dadc;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.agreement-text a {
+    color: #4fbcff;
+    text-decoration: none;
+}
+
+/* Social buttons */
+.social-btn {
+    display: block;
+    width: 100%;
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 14px;
+    margin: 12px 0;  /* 1 finger gap */
+    border-radius: 25px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Divider line with OR */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    color: #a3a3a3;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #333;
+}
+
+.divider span {
+    margin: 0 10px;
+}
+
+/* Input fields */
+.input-field {
+    width: 100%;
+    padding: 14px;
+    margin: 18px 0; /* 2 finger gap */
+    border-radius: 8px;
+    border: none;
+    background-color: #272729;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-field::placeholder {
+    color: #a3a3a3;
+}
+
+/* Forgot password link */
+.forgot {
+    display: block;
+    text-align: left;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #4fbcff;
+    text-decoration: none;
+}
+
+/* Login button */
+.login-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 25px;
+    background-color: #ec7d7d;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Sign up text */
+.signup-text {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.signup-text a {
+    color: #4fbcff;
+    text-decoration: none;
+}

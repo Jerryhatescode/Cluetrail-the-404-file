@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClueTrail</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+  <div class="logo">ClueTrail: The 404 file</div>
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('admin') }}">admin</a></li>
+      <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+      <li><a href="{{ url_for('blog') }}">Blog</a></li>
+      <li><a href="{{ url_for('team') }}">Team</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <!-- Hero Section with Background Video -->
+  <section class="hero">
+    <video autoplay muted loop id="bg-video">
+      <source src="{{ url_for('static', filename='image/intro.mp4') }}" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="hero-text">
+      <h1>Follow the Clues. Find the Trail.</h1>
+      <p>Your adventure starts here...</p>
+    </div>
+  </section>
+
+  <!-- What is ClueTrail -->
+<section id="about" class="about">
+  <h2>What is ClueTrail?</h2>
+  <p class="intro">
+    ClueTrail is a hub for case enthusiasts and curious minds. 
+    Explore unsolved mysteries, revisit solved cases, discover 
+    podcast recommendations, join blog discussions, request new 
+    cases, and even dive into crime-inspired movies. 
+    Follow the clues and find the trail.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <span class="icon"></span>
+      <a href="{{ url_for('case_list') }}" class="card">
+    <span class="icon"></span>
+    <h3>Cold Cases</h3>
+    <p>Unsolved mysteries waiting for curious minds to dig in.</p>
+</a>
+    <div class="card">
+      <span class="icon"></span>
+      <h3>Solved Cases</h3>
+      <p>Read about mysteries that finally found their answers.</p>
+    </div>
+    <div class="card">
+      <span class="icon"></span>
+      <h3>Podcasts</h3>
+      <p>Get recommendations from storytellers and investigators.</p>
+    </div>
+    <div class="card">
+      <span class="icon"></span>
+      <h3>Blog</h3>
+      <p>Discuss, request, and share thoughts with the community.</p>
+    </div>
+    <div class="card">
+      <span class="icon"></span>
+      <h3>Inspired Movies</h3>
+      <p>Explore films inspired by true cold cases and mysteries.</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Inspired by Podcasts -->
+  <section id="inspired" class="inspired">
+  <h2>Inspired By</h2>
+
+  <!-- Reddit -->
+  <div class="inspired-item">
+    <div class="inspired-image">
+      <img src="{{ url_for('static', filename='image/reddit.png') }}" alt="Reddit">
+    </div>
+    <div class="inspired-text">
+      <h3>Reddit</h3>
+      <p>ClueTrail is inspired by communities like <em>r/UnresolvedMysteries</em> and 
+      <em>r/TrueCrime</em>, where people worldwide come together to analyze, debate, 
+      and search for answers in unsolved cases.</p>
+    </div>
+  </div>
+
+  <!-- Cold Case Library -->
+  <div class="inspired-item reverse">
+    <div class="inspired-image">
+      <img src="{{ url_for('static', filename='image/podcast.jpg') }}" alt="Cold Case Library">
+    </div>
+    <div class="inspired-text">
+      <h3>Cold Case Library</h3>
+      <p>We also draw inspiration from resources like Cold Case Library, which collects 
+      detailed records of unsolved and solved mysteries, helping enthusiasts and 
+      investigators learn from past cases.</p>
+    </div>
+  </div>
+
+  <!-- cold case podcast -->
+  <div class="inspired-item">
+    <div class="inspired-image">
+      <img src="{{ url_for('static', filename='image/youtube.png') }}" alt="Stephanie Soo">
+    </div>
+    <div class="inspired-text">
+      <h3>Cold case Show</h3>
+      <p>True crime storyteller  inspires us with her ability to blend 
+      compelling narratives and awareness, keeping audiences engaged while shedding 
+      light on real-life mysteries.</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+  <div class="footer-links">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('auth.login') }}">Login</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('team') }}">Team</a>
+  </div>
+  <p>© 2025 ClueTrail. All rights reserved.</p>
+</footer>
+
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>

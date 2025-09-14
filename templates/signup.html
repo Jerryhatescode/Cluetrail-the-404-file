@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClueTrail — Sign Up</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <h2 class="login-title">Sign Up</h2>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('auth.signup') }}" id="signupForm">
+      <input type="text" name="name" placeholder="Full Name *" class="input-field" required>
+      <input type="email" name="email" placeholder="Email *" class="input-field" required>
+      <input type="password" name="password" placeholder="Password *" class="input-field" required>
+      <button type="submit" class="login-btn">Create Account</button>
+    </form>
+
+    <p class="signup-text">Already have an account? <a href="{{ url_for('auth.login') }}">Log In</a></p>
+
+    <!-- Display generated username if available -->
+    {% if session.get('username') %}
+      <p class="signup-text success">Your username: <strong>{{ session.pop('username') }}</strong></p>
+    {% endif %}
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', (e) => {
+      const password = form.password.value;
+      if(password.length < 6){
+        e.preventDefault();
+        alert('Password must be at least 6 characters.');
+      }
+    });
+  </script>
+</body>
+</html>

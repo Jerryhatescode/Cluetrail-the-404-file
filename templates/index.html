@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClueTrail — Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f10; --panel:#161617; --panel2:#111; --border:#470404;
+      --text:#f6f4f4; --muted:#bdbdbd; --red:#e55757; --red2:#e55757;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,Segoe UI,Roboto,Arial}
+    a{color:inherit;text-decoration:none}
+
+    /* Ensure footer stays at bottom */
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+    main { flex: 1 0 auto; }
+    footer { flex-shrink: 0; }
+
+    /* ---------- Splash / Welcome ---------- */
+    #welcome{
+      position:fixed; inset:0; z-index:70;
+      background:
+        linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.85)),
+        url('./static/images/detective-bg.jpg') center/cover no-repeat;
+      display:flex; align-items:center; justify-content:center; text-align:center; padding:24px;
+    }
+    .wel-box{max-width:760px}
+    .wel-title{font-size:46px; line-height:1.1; margin:0 0 8px}
+    .wel-title span{color:var(--red)}
+    .wel-sub{opacity:.9; margin:0 0 18px}
+    .btn{padding:12px 18px; border-radius:10px; border:1px solid var(--border); background:#1d1d1e; color:#fff; cursor:pointer}
+    .btn.primary{background:var(--red); border-color:var(--red)}
+    .btn.primary:hover{background:var(--red2)}
+    .hint{display:block; margin-top:6px; opacity:.7}
+
+    /* ---------- Explore hero (after login) ---------- */
+    .hero{
+      position:relative; padding:44px 16px; background:var(--panel);
+      border-bottom:1px solid var(--border);
+    }
+    .hero-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:18px}
+    .hero h2{margin:0 0 6px}
+    .hero p{margin:0; color:var(--muted)}
+    .hero .letsgo{
+      margin-left:auto; display:flex; align-items:center; gap:10px;
+      background:#e55757; border:1px solid var(--border); padding:10px 14px; border-radius:10px; cursor:pointer;
+    }
+    .arrow-down{
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:-16px; width:38px; height:38px; border-radius:50%;
+      background:#222; border:1px solid var(--border); display:grid; place-items:center;
+      box-shadow:0 8px 30px rgba(0,0,0,.25); cursor:pointer;
+    }
+
+    /* ---------- Sidebar & Header ---------- */
+    .header{
+      position:sticky; top:0; z-index:50; background:#181819; border-bottom:1px solid var(--border);
+      display:flex; align-items:center; gap:12px; padding:12px 16px;
+    }
+    .icon-btn{background:#222; border:1px solid var(--border); color:#fff; padding:9px 11px; border-radius:9px; cursor:pointer}
+    .search-wrap{position:relative; flex:1; display:flex; align-items:center; gap:8px;
+      background:hsl(0, 0%, 2%); border:1px solid var(--border); border-radius:12px; padding:10px 12px}
+    .search-wrap input{flex:1; background:transparent; border:none; color:#fff; outline:none}
+    .lang{background:#e4bc9d; color:#080808; border:1px solid var(--border); border-radius:10px; padding:9px 10px}
+
+    .sidebar{
+      position:fixed; top:0; left:-280px; width:260px; height:100vh; z-index:60;
+      background:#ddddf4; border-right:1px solid var(--border); padding:18px; transition:left .24s ease;
+    }
+    .sidebar.open{left:0}
+    .side-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px}
+    .menu a{display:block; padding:10px 12px; border-radius:10px; color:#0d0d0d}
+    .menu a:hover{background:#f2efef}
+    .sidebar hr{border:0; border-top:1px solid var(--border); margin:10px 0}
+
+    /* ---------- Top case strip ---------- */
+    .top-strip{
+      display:flex; gap:16px; justify-content:space-between; align-items:center;
+      padding:10px 16px; background:#121213; border-bottom:1px solid var(--border);
+    }
+    .link{background:none; border:none; color:var(--red); cursor:pointer}
+
+    /* ---------- Main content ---------- */
+    .container{max-width:1150px; margin:18px auto; padding:0 16px}
+    .two-col{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    @media (max-width:900px){.two-col{grid-template-columns:1fr}}
+
+    .box{
+      background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px;
+    }
+    .box-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px}
+    .box-head h3{margin:0}
+    .filters{display:flex; gap:8px}
+    .filters select{background:#202022; color:#fff; border:1px solid var(--border); border-radius:10px; padding:8px}
+
+    /* chips horizontal scroll */
+    .chips{display:flex; gap:10px; overflow:auto; padding-bottom:6px; scrollbar-width:thin}
+    .chip{white-space:nowrap; background:#202022; border:1px solid var(--border); color:#ddd; border-radius:999px; padding:9px 12px; cursor:pointer}
+    .chip:hover{border-color:var(--red)}
+
+    /* Cards */
+    .cards{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    @media (max-width:700px){.cards{grid-template-columns:1fr}}
+    .case-card{display:flex; gap:12px; background:#141415; border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition:transform .16s ease, border-color .16s ease}
+    .case-card:hover{transform:translateY(-4px); border-color:var(--red)}
+    .thumb{width:42%; min-height:120px; overflow:hidden}
+    .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+    .meta{padding:12px 12px 12px 0; display:flex; gap:6px; flex-direction:column}
+    .muted{color:var(--muted)}
+
+    /* Footer */
+    footer{
+      position:sticky; bottom:0; background:#161617; border-top:1px solid var(--border); color:#cfcfcf;
+      display:flex; justify-content:space-around; padding:12px 16px;
+    }
+
+    /* Modal */
+    .modal{position:fixed; inset:0; background:rgba(18, 18, 18, 0.55); display:none; align-items:center; justify-content:center; z-index:80; padding:18px}
+    .modal.show{display:flex}
+    .dialog{background:#080808; border:1px solid var(--border); border-radius:12px; max-width:520px; width:100%; padding:18px}
+    .dialog h3{margin:6px 0 10px}
+    .m-actions{display:flex; gap:10px; margin-top:12px}
+    .closex{float:right; background:#222; border:1px solid var(--border); color:#fff; padding:6px 10px; border-radius:8px; cursor:pointer}
+
+    /* =========================================
+       CT: Theme Colors & Glow Effects START
+    ========================================= */
+    /* Global background */
+    body {
+        background-color: #0d0d0d;
+        color: #f2f2f2;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2rem;
+        color: #ffcc00;
+        border-left: 5px solid #ff4d4d;
+        padding-left: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    button,
+    .btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s ease;
+    }
+
+    button:hover,
+    .btn:hover {
+        background-color: #ff1a1a;
+        box-shadow: 0 0 15px #ff4d4d;
+    }
+
+    /* Case Cards */
+    .case-card {
+        background-color: #1a1a40;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .case-card:hover {
+        transform: scale(1.05);
+        border-color: #ffcc00;
+        box-shadow: 0 0 20px #ffcc00;
+    }
+
+    /* Links */
+    a {
+        color: #ffcc00;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        color: #ff4d4d;
+    }
+
+    /* =========================================
+       CT: Theme Colors & Glow Effects END
+    ========================================= */
+  </style>
+</head>
+<body>
+  <!-- =================== WELCOME / SPLASH =================== -->
+  <section id="welcome" aria-label="Welcome">
+    <div class="wel-box">
+      <h1 class="wel-title">Welcome to <span>ClueTrail</span></h1>
+      <p class="wel-sub">Are you ready to explore the unknown and connect the clues?</p>
+      <button id="enterBtn" class="btn primary">Let’s Solve</button>
+      <small class="hint">Auto-enter in 10 seconds…</small>
+    </div>
+  </section>
+
+  <!-- =================== HEADER & SIDEBAR =================== -->
+  <header class="header" id="header">
+    <button class="icon-btn" id="openSide"><i class="fa fa-bars"></i></button>
+    <div class="search-wrap">
+      <i class="fa fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search cases, people, places, keywords…">
+    </div>
+    <select class="lang">
+      <option>EN</option><option>HI</option><option>mar</option><option>french</option>
+    </select>
+  </header>
+
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="side-head">
+      <h3 style="margin:0">Menu</h3>
+      <button class="icon-btn" id="closeSide"><i class="fa fa-times"></i></button>
+    </div>
+    <nav class="menu">
+      <a href="#"><i class="fa fa-layer-group"></i> Genre 🤖</a>
+      <a href="#"><i class="fa fa-thumbs-up"></i> Recommendation🕵️ </a>
+      <a href="#"><i class="fa fa-lightbulb"></i> Top Theory👮‍♀️</a>
+      <a href="#"><i class="fa fa-ranking-star"></i> Top Ranked☄️</a>
+      <a href="#"><i class="fa fa-star"></i> Famous ClueTrail🧟‍♀️</a>
+      <hr>
+      <li><a href="{{ url_for('auth.login') }}"><i class="fa fa-right-from-bracket"></i> Login/ sign up</a>
+      <hr>
+      <a href="#"><i class="fa fa-right-from-bracket"></i> Log out</a>
+      <a href="#"><i class="fa fa-file-lines"></i> Privacy & Policy</a>
+      <a href="#"><i class="fa fa-certificate"></i> License</a>
+    </nav>
+  </aside>
+
+  <!-- =================== EXPLORE HERO (AFTER LOGIN) =================== -->
+  <section class="hero" id="hero" style="display:none">
+    <div class="hero-inner">
+      <div>
+        <h2>Are you ready to explore?</h2>
+        <p>Slide up or tap “Login” to jump into today’s mysteries.</p>
+      </div>
+      <button class="letsgo" id="loginBtn"><i class="fa fa-arrow-up"></i> login </button>
+    </div>
+    <div class="arrow-down" id="scrollDown" title="Scroll to content">
+      <i class="fa fa-arrow-down"></i>
+    </div>
+  </section>
+
+  <!-- =================== TOP STRIP (POPUP TRIGGER) =================== -->
+  <div class="top-strip" id="topstrip" style="display:none">
+    <span><i class="fa fa-bell"></i> Top case after login: <b>Malaysia Airlines 370</b></span>
+    <button class="link" id="openTopCase">View details</button>
+  </div>
+
+  <!-- =================== MAIN CONTENT =================== -->
+  <main class="container" id="main">
+    <!-- Genres + Filters -->
+    <section class="box">
+      <div class="box-head">
+        <h3><i class="fa fa-layer-group"></i> Genres</h3>
+        <div class="filters">
+          <select><option>Status: All</option><option>Active</option><option>Cold</option><option>Solved</option><option>unsolved</option></select>
+          <select><option>Year: Any</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option></select>
+          <select><option>Location: All</option><option>India</option><option>USA</option><option>UK</option><option>Malaysia</option><option>japan</option><option>korea</option><option>peru</option></select>
+        </div>
+      </div>
+      <div class="chips">
+        <button class="chip">homicides</button>
+        <button class="chip">Kidnapping</button>
+        <button class="chip">Cyber Crime</button>
+        <button class="chip">bullying</button>
+        <button class="chip">Missing</button>
+        <button class="chip">Dark Web</button>
+        <button class="chip">Cold Case</button>
+        <button class="chip">Conspiracy</button>
+        <button class="chip">domestic voilence</button>
+      </div>
+    </section>
+
+    <!-- Top Case -->
+    <section class="box">
+      <div class="box-head">
+        <h3 class="section-title"><i class="fa fa-fire"></i> Top Case</h3>
+      </div>
+      <div class="cards">
+        <article class="case-card" id="caseMH370" data-aos="fade-up">
+          <div class="thumb">
+            <img src="images/malaysia-crash.jpeg" alt="Malaysia Airlines Crash">
+          </div>
+          <div class="meta">
+            <h4>Malaysia Airlines 370</h4>
+            <div class="muted">Disappeared: Mar 2014 • Status: Unresolved</div>
+            <div class="muted">Clues: Satellite pings, last ATC comms, floating debris</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Most Recent Case -->
+    <section class="box">
+      <div class="box-head">
+        <h3 class="section-title"><i class="fa fa-fire"></i> Most Recent</h3>
+      </div>
+      <div class="cards">
+        <article class="case-card" id="caseZodiac" data-aos="fade-up">
+          <div class="thumb">
+            <img src="images/zodiac-killer.jpeg" alt="Zodiac Killer">
+          </div>
+          <div class="meta">
+            <h4>A killer who kills people on the basis of their zodiac</h4>
+            <div class="muted">Status: Ongoing • Posted: Today</div>
+            <div class="muted">Clues: A chilling story where nothing is as it seems...</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    
+  <!-- =================== FOOTER =================== -->
+  <footer>
+    <div>FAQ</div>
+    <div>Contact Us</div>
+    <div>Connect with Us</div>
+  </footer>
+
+  <!-- =================== MODALS =================== -->
+  <div class="modal" id="modalMH370" aria-hidden="true">
+    <div class="dialog">
+      <button class="closex" data-close>&times;</button>
+      <h3>Malaysia Airlines 370</h3>
+      <p>Explore radar trails, last ATC communications, satellite “handshakes”, and debris findings across the Indian Ocean.</p>
+      <div class="m-actions">
+        <button class="btn primary">Open Case</button>
+        <button class="btn" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---- Welcome flow ----
+    const welcome = document.getElementById('welcome');
+    const enterBtn = document.getElementById('enterBtn');
+    const hero = document.getElementById('hero');
+    const topstrip = document.getElementById('topstrip');
+    const main = document.getElementById('main');
+
+    function enterApp(){
+      welcome.style.display='none';
+      hero.style.display='block';
+      topstrip.style.display='flex';   
+      setTimeout(()=> openModal(document.getElementById('modalMH370')), 600);
+    }
+    enterBtn.addEventListener('click', enterApp);
+    setTimeout(()=>{ if(welcome.style.display!=='none') enterApp(); }, 10000);
+
+    // hero actions
+    document.getElementById('loginBtn').addEventListener ('click', () => window.location.href = "{{ url_for('auth.login') }}");
+    document.getElementById('scrollDown').addEventListener('click', () => main.scrollIntoView({behavior:'smooth'}));
+
+    // ---- Sidebar ----
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('openSide').addEventListener('click', () => sidebar.classList.add('open'));
+    document.getElementById('closeSide').addEventListener('click', () => sidebar.classList.remove('open'));
+    document.addEventListener('keydown', e => { if(e.key==='Escape') sidebar.classList.remove('open'); });
+
+    // ---- Top strip modal trigger ----
+    document.getElementById('openTopCase').addEventListener('click', () => openModal(document.getElementById('modalMH370')));
+    document.getElementById('caseMH370').addEventListener('click', () => openModal(document.getElementById('modalMH370')));
+
+    // ---- Modal helpers ----
+    function openModal(el){ el.classList.add('show'); el.setAttribute('aria-hidden','false'); }
+    function closeModal(el){ el.classList.remove('show'); el.setAttribute('aria-hidden','true'); }
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', (e) => {
+        if(e.target.dataset.close!==undefined || e.target===m) closeModal(m);
+      });
+    });
+  </script>
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
+</body>
+</html>

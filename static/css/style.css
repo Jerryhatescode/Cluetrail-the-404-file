@@ -1,0 +1,510 @@
+/* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body styling with background image */
+body {
+    background: url('../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    line-height: 1.6;
+    font-size: 16px;
+    min-height: 100vh;
+}
+
+
+/* Semi-transparent overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+/* Container for all cases */
+.main-content {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Case block styling */
+.case-block {
+    background: rgba(30, 30, 30, 0.9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.case-block img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.case-block h3 {
+    font-size: 1.4rem;
+    padding: 15px;
+    color: #fff;
+}
+
+.case-block p {
+    padding: 0 15px 15px;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+/* Hover effect */
+.case-block:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+/* Header styling */
+header {
+    background: rgba(20, 20, 20, 0.95);
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #444;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    header {
+        font-size: 1.5rem;
+    }
+    .case-block img {
+        height: 180px;
+    }
+    .lets-go-btn {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.lets-go-btn:hover {
+    background-color: #cc0000;
+    .country-cases .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.country-cases .tag {
+    background-color: #222;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.country-cases .tag:hover {
+    background-color: #e50914; /* Netflix red hover */
+}
+/* Country-wise Cases Section */
+.country-cases {
+    margin: 30px 0;
+    padding: 20px;
+    background: #121212;
+    border-radius: 8px;
+}
+
+.country-cases .box-head h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.country-card {
+    background: #1e1e1e;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, background 0.3s;
+    cursor: pointer;
+}
+
+.country-card:hover {
+    background: #ff2e63;
+    transform: scale(1.05);
+    color: #fff;
+}
+}
+.country-cases {
+    margin: 30px 0;
+    padding: 20px;
+    background: #121212;
+    border-radius: 8px;
+}
+
+.country-cases .box-head h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Horizontal layout for countries */
+.country-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.country-item {
+    background: #1e1e1e;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.country-item:hover {
+    background: #ff2e63;
+    transform: scale(1.05);
+    color: #fff;
+}
+
+
+}
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #111;
+    color: #f0f0f0;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #1c1c1c;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: #ff3b3b;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ddd;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.sidebar ul li a:hover {
+    color: #ff3b3b;
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.8rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar.active ~ .main-content {
+    margin-left: 250px;
+}
+
+/* Case Blocks */
+.case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
+}
+
+.case-block {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.case-block img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.case-block h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.case-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(255, 59, 59, 0.3);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .sidebar ul li a {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .case-grid {
+        grid-template-columns: 1fr;
+    }
+    
+.case-card img, .case-block img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.case-card:hover img, .case-block:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.4);
+}
+
+body {
+  background-color: #0d0d0d;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Neon Accent Colors */
+:root {
+  --neon-red: #ff4d4d;
+  --neon-yellow: #ffcc00;
+  --neon-blue: #1a1a40;
+}
+
+/* ===================== NAVIGATION ===================== */
+nav {
+  background-color: var(--neon-blue);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px var(--neon-yellow);
+}
+
+/* ===================== SECTIONS ===================== */
+section {
+  padding: 50px 20px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  border-left: 6px solid var(--neon-red);
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+/* ===================== SEARCH BAR ===================== */
+.search-bar input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 18px;
+  border: 2px solid #333;
+  border-radius: 50px;
+  background: #1a1a1a;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 10px var(--neon-yellow);
+}
+
+/* ===================== CASE CARDS ===================== */
+.case-card {
+  background: #111;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  filter: brightness(70%);
+  transition: transform 0.3s ease;
+}
+
+.case-card .overlay-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  font-size: 1.8rem;
+  text-shadow: 0 0 8px #000;
+}
+
+.case-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-red);
+}
+
+.case-card:hover img {
+  transform: scale(1.1);
+}
+
+/* ===================== BUTTONS ===================== */
+button, .btn {
+  background: var(--neon-red);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  box-shadow: 0 0 15px var(--neon-red);
+  transform: translateY(-3px);
+}
+
+/* ===================== ANIMATIONS ===================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .case-card img {
+    height: 180px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  button, .btn {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+}
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ case.title if case else "Case Not Found" }}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    body { background:#0d0d0d; color:#f2f2f2; font-family:'Poppins',sans-serif; margin:0; padding:0; }
+    .wrap { max-width:900px; margin:20px auto; padding:20px; }
+    img { max-width:100%; border-radius:10px; }
+    h1 { font-size:32px; margin-bottom:10px; }
+    .info { margin:12px 0; font-size:16px; }
+    .desc { margin:20px 0; font-size:15px; line-height:1.5; color:#ccc; }
+    .reviews { margin-top:30px; }
+    .review { border-top:1px solid #333; padding:10px 0; }
+    .btn { display:inline-block; padding:8px 14px; background:#ff4d4d; color:#fff; border-radius:6px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+   {% if not case %}
+  <h1>Case not found</h1>
+{% else %}
+  <h1>{{ case.title }}</h1>
+  {% if case.image %}
+    <img src="{{ case.image }}" alt="{{ case.title }}" style="max-width:400px; margin-bottom:20px;">
+  {% endif %}
+
+  <div class="info">
+    Genre: {{ case.genre or "N/A" }} |
+    Status: {{ case.status or "N/A" }} |
+    Location: {{ case.location or "N/A" }} |
+    Year: {{ case.year or "Unknown" }}
+  </div>
+
+  {% if details.get('description') %}
+    <h2>Description</h2>
+    <p>{{ details.get('description') }}</p>
+  {% endif %}
+
+  {% set victim = details.get('victim') %}
+  {% if victim %}
+    <h2>Victim</h2>
+    <p>Name: {{ victim.get('name', 'N/A') }}</p>
+    <p>Age: {{ victim.get('age', 'N/A') }}</p>
+    <p>Gender: {{ victim.get('gender', 'N/A') }}</p>
+    {% if victim.get('identified_year') %}
+      <p>Identified Year: {{ victim.get('identified_year') }}</p>
+    {% endif %}
+  {% endif %}
+
+  {% set evidence = details.get('evidence') %}
+  {% if evidence and evidence.get('photos') %}
+    <h2>Evidence (Photos)</h2>
+    {% for photo in evidence.get('photos') %}
+      <img src="{{ photo.get('url') }}" alt="{{ photo.get('caption') }}" style="max-width:300px; display:block; margin-bottom:10px;">
+      <p>{{ photo.get('caption') }}</p>
+    {% endfor %}
+  {% endif %}
+
+  {% if details.get('suspects_and_theories') %}
+    <h2>Suspects & Theories</h2>
+    {% for theory in details.get('suspects_and_theories') %}
+      <h4>{{ theory.get('title') }}</h4>
+      <p>{{ theory.get('description') }}</p>
+    {% endfor %}
+  {% endif %}
+
+  {% if details.get('explanations') %}
+    <h2>Explanations</h2>
+    {% for exp in details.get('explanations') %}
+      <h4>{{ exp.get('topic') }}</h4>
+      <p>{{ exp.get('text') }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <h2>Reviews</h2>
+  <div class="reviews">
+    {% for r in reviews %}
+      <div class="review"><strong>{{ r.user }}:</strong> {{ r.text }}</div>
+    {% else %}
+      <div>No reviews yet.</div>
+    {% endfor %}
+  </div>
+
+  <h3>Leave a Review</h3>
+  <form method="post">
+    <input type="text" name="review" placeholder="Your review..." style="width:70%;padding:8px;border-radius:6px;border:none;">
+    <button type="submit" class="btn">Submit</button>
+  </form>
+
+  <a href="{{ url_for('case_download', case_id=case.id) }}" class="btn" style="margin-top:20px; display:inline-block;">
+    <i class="fa fa-download"></i> Download PDF
+  </a>
+{% endif %}
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 900, once: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  overflow: hidden;
+}
+
+/* Background image */
+body {
+  background: url("../image/facelss.jpg") no-repeat right; 
+  background-position: cover;
+  background-color: #000000; /* pure black */
+  height: 100%;
+}
+
+/* Top-right hamburger */
+.fa-bars {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Glass panel */
+.glass-panel {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5); /* darker glass for readability */
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 15px;
+  max-width: 500px;
+  color: #ffffff; /* bright text */
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+  animation: slideIn 1.5s ease forwards;
+}
+
+/* Headings */
+.glass-panel h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 2s 0.5s forwards;
+}
+
+/* Paragraph */
+.glass-panel p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 2s 1.5s forwards;
+}
+
+/* Arrow */
+.glass-panel .arrow {
+  font-size: 2rem;
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0;
+  animation: fadeIn 2s 2.5s forwards;
+  transition: transform 0.3s, color 0.3s;
+  color: #ffffff;
+}
+
+.glass-panel .arrow:hover {
+  transform: translateX(10px);
+  color: #ffd700; /* golden hover */
+}
+
+/* Animations */
+@keyframes slideIn {
+  0% { transform: translate(-100%, -50%); opacity: 0; }
+  100% { transform: translate(0, -50%); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-20px); }
+}

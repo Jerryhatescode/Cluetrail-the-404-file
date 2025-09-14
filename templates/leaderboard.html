@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Leaderboard - Crime Cases Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Leaderboard</h1>
+            <p>Top contributors in solving crime cases</p>
+        </header>
+
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Points</th>
+                    <th>Cases Solved</th>
+                    <th>Badges</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><div class="user-info"><img src="https://via.placeholder.com/40" alt="User"><span>CrimeHunter</span></div></td>
+                    <td>450</td>
+                    <td>35</td>
+                    <td><span class="badge expert">Expert Solver</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><div class="user-info"><img src="https://via.placeholder.com/40" alt="User"><span>JusticeSeeker</span></div></td>
+                    <td>380</td>
+                    <td>28</td>
+                    <td><span class="badge trusted">Trusted Reviewer</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><div class="user-info"><img src="https://via.placeholder.com/40" alt="User"><span>DarkCaseBuster</span></div></td>
+                    <td>320</td>
+                    <td>22</td>
+                    <td><span class="badge rookie">Rookie Detective</span></td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

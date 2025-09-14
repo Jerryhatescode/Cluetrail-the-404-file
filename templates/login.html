@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClueTrail Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <button class="close-btn">&times;</button>
+        <h2 class="login-title">Log In</h2>
+        <p class="agreement-text">
+            By continuing, you agree to our <a href="#">User Agreement</a> and acknowledge that you understand the <a href="#">Privacy Policy</a>.
+        </p>
+
+        <button class="social-btn phone"><span>📞</span> Continue With Phone Number</button>
+        <button class="social-btn google"><span>🌐</span> Continue with Google</button>
+        <button class="social-btn apple"><span>🍏</span> Continue With Apple</button>
+
+        <div class="divider"><span>OR</span></div>
+             <form id="login-form" method="POST" action="{{ url_for('auth.login') }}">
+            <input type="text" name="email" placeholder="Email or username *" class="input-field" required>
+            <input type="password" id="password" name="password" placeholder="Password *" class="input-field" required>
+           <div id="suggestions-box" class="suggestions-box"></div>
+        <a href="#" class="forgot">Forgot password?</a>
+
+        <button class="login-btn">Log In</button>
+
+        <p class="signup-text">New to ClueTrail? <a href="{{ url_for('auth.signup') }}">Sign Up</a></p>
+    </div>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
