@@ -1,106 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ case.title if case else "Case Not Found" }}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <style>
-    body { background:#0d0d0d; color:#f2f2f2; font-family:'Poppins',sans-serif; margin:0; padding:0; }
-    .wrap { max-width:900px; margin:20px auto; padding:20px; }
-    img { max-width:100%; border-radius:10px; }
-    h1 { font-size:32px; margin-bottom:10px; }
-    .info { margin:12px 0; font-size:16px; }
-    .desc { margin:20px 0; font-size:15px; line-height:1.5; color:#ccc; }
-    .reviews { margin-top:30px; }
-    .review { border-top:1px solid #333; padding:10px 0; }
-    .btn { display:inline-block; padding:8px 14px; background:#ff4d4d; color:#fff; border-radius:6px; text-decoration:none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ case.title if case else "Case Not Found" }} — ClueTrail</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  body{font-family:Arial, sans-serif;background:#0d0d0d;color:#f2f2f2;margin:0;padding:20px;}
+  a{color:#ff4d4d;text-decoration:none;}
+  .container{max-width:900px;margin:0 auto;}
+  .card{background:#151517;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(255,0,0,0.3);margin-bottom:24px;}
+  h1{margin:0 0 12px;font-size:28px;color:#ff4d4d;}
+  h3{color:#ff4d4d;margin-top:24px;}
+  .meta{color:#bdbdbd;font-size:14px;margin-bottom:16px;}
+  ul{padding-left:20px;}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;font-weight:700;background:#ff4d4d;border:1px solid #992b2b;color:#fff;transition:all .2s ease;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 0 16px rgba(255,77,77,0.35);background:#ff1a1a;}
+  .section{margin-top:24px;}
+  .section-img{width:100%;height:220px;border-radius:10px;object-fit:cover;margin-bottom:14px;opacity:0.95;}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-   {% if not case %}
-  <h1>Case not found</h1>
-{% else %}
+<div class="container">
+{% if case %}
+<div class="card">
   <h1>{{ case.title }}</h1>
-  {% if case.image %}
-    <img src="{{ case.image }}" alt="{{ case.title }}" style="max-width:400px; margin-bottom:20px;">
-  {% endif %}
+  <div class="meta">{{ case.status or "Unsolved" }} · {{ case.year or "—" }} · {{ case.location or "Unknown" }}</div>
 
-  <div class="info">
-    Genre: {{ case.genre or "N/A" }} |
-    Status: {{ case.status or "N/A" }} |
-    Location: {{ case.location or "N/A" }} |
-    Year: {{ case.year or "Unknown" }}
+  <div class="section" style="display:flex;gap:12px;">
+    <a class="btn" href="{{ url_for('case_download', case_id=case.id) }}"><i class="fa fa-download"></i> Download PDF</a>
   </div>
 
-  {% if details.get('description') %}
-    <h2>Description</h2>
-    <p>{{ details.get('description') }}</p>
+  {% if map_embed %}
+  <div class="section">
+    <h3>Last Known Location</h3>
+    <iframe src="{{ map_embed }}"
+      width="100%" height="300" style="border:0;border-radius:10px;" allowfullscreen loading="lazy"></iframe>
+  </div>
   {% endif %}
 
-  {% set victim = details.get('victim') %}
-  {% if victim %}
-    <h2>Victim</h2>
-    <p>Name: {{ victim.get('name', 'N/A') }}</p>
-    <p>Age: {{ victim.get('age', 'N/A') }}</p>
-    <p>Gender: {{ victim.get('gender', 'N/A') }}</p>
-    {% if victim.get('identified_year') %}
-      <p>Identified Year: {{ victim.get('identified_year') }}</p>
+  {% if story %}
+  <div class="section">
+    <h3>Story</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Story image">
+    {% for k,v in story.items() %}
+      <p><b>{{ k.replace('_',' ').title() }}:</b> {{ v }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if investigation %}
+  <div class="section">
+    <h3>Investigation</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Investigation image">
+    {% if investigation.findings %}
+      <ul>
+        {% for f in investigation.findings %}
+          <li>{{ f }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
-  {% endif %}
-
-  {% set evidence = details.get('evidence') %}
-  {% if evidence and evidence.get('photos') %}
-    <h2>Evidence (Photos)</h2>
-    {% for photo in evidence.get('photos') %}
-      <img src="{{ photo.get('url') }}" alt="{{ photo.get('caption') }}" style="max-width:300px; display:block; margin-bottom:10px;">
-      <p>{{ photo.get('caption') }}</p>
-    {% endfor %}
-  {% endif %}
-
-  {% if details.get('suspects_and_theories') %}
-    <h2>Suspects & Theories</h2>
-    {% for theory in details.get('suspects_and_theories') %}
-      <h4>{{ theory.get('title') }}</h4>
-      <p>{{ theory.get('description') }}</p>
-    {% endfor %}
-  {% endif %}
-
-  {% if details.get('explanations') %}
-    <h2>Explanations</h2>
-    {% for exp in details.get('explanations') %}
-      <h4>{{ exp.get('topic') }}</h4>
-      <p>{{ exp.get('text') }}</p>
-    {% endfor %}
-  {% endif %}
-
-  <h2>Reviews</h2>
-  <div class="reviews">
-    {% for r in reviews %}
-      <div class="review"><strong>{{ r.user }}:</strong> {{ r.text }}</div>
-    {% else %}
-      <div>No reviews yet.</div>
-    {% endfor %}
   </div>
+  {% endif %}
 
-  <h3>Leave a Review</h3>
-  <form method="post">
-    <input type="text" name="review" placeholder="Your review..." style="width:70%;padding:8px;border-radius:6px;border:none;">
-    <button type="submit" class="btn">Submit</button>
-  </form>
+  {% if rumors %}
+  <div class="section">
+    <h3>Rumors & Theories</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Rumors image">
+    <ul>
+      {% for r in rumors %}
+        <li><b>{{ r.title or "Unnamed Theory" }}:</b> {{ r.description or "" }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
 
-  <a href="{{ url_for('case_download', case_id=case.id) }}" class="btn" style="margin-top:20px; display:inline-block;">
-    <i class="fa fa-download"></i> Download PDF
-  </a>
+  {% if suspects %}
+  <div class="section">
+    <h3>Suspects</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Suspects image">
+    <ul>
+      {% for s in suspects %}
+        <li><b>{{ s.name }}</b> — {{ s.status or "Unknown" }} ({{ s.relation or "?" }}): {{ s.notes or "" }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if timeline %}
+  <div class="section">
+    <h3>Timeline</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Timeline image">
+    <ul>
+      {% for t in timeline %}
+        <li><b>{{ t.year or t.date or "—" }}</b> — {{ t.event or t.description or "" }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if impact %}
+  <div class="section">
+    <h3>Impact</h3>
+    <img class="section-img" src="{{ gallery[0] if gallery else '' }}" alt="Impact image">
+    <ul>
+      {% for k,v in impact.items() %}
+        <li><b>{{ k.replace('_',' ').title() }}:</b> {{ v }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+{% else %}
+<div class="card">
+  <h1>Case Not Found</h1>
+  <p>The case you are looking for does not exist.</p>
+</div>
 {% endif %}
-    
-  </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 900, once: true });
-  </script>
+<script>
+window.caseExists = {{ 'true' if case else 'false' }};
+window.unsplashQueries = {{ details.get('unsplash_queries')|tojson|safe if details else '{}' }};
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/detail.js') }}"></script>
 </body>
 </html>
