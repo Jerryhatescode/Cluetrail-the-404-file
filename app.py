@@ -12,9 +12,7 @@ from models import db, User, Case, Review, Leaderboard
 from auth import auth_bp
 from data import LEADERBOARD   # optional fallback data
 
-# ----------------------
-# APP CONFIG
-# ----------------------
+
 app = Flask(__name__)
 app.secret_key = "change-this-secret"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///clue_trail.db"
@@ -45,9 +43,7 @@ def inject_globals():
     return {"current_user": current_user, "is_authenticated": current_user.is_authenticated}
 
 
-# ----------------------
-# UNSPLASH AUTO IMAGE FETCH
-# ----------------------
+
 UNSPLASH_ACCESS_KEY = "StBNPVGnC8bjRhm_9xpNFfookHgalZqolhgMuYYkqBQ"  
 
 def fetch_case_image(case_name):
@@ -66,9 +62,7 @@ def fetch_case_image(case_name):
     return "/static/images/404.jpg"
 
 
-# ----------------------
-# FRONTEND ROUTES
-# ----------------------
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -99,9 +93,7 @@ def case_list():
     return render_template("case_list.html", cases=query.all())
 
 
-# ----------------------
-# CASE DETAIL AND DOWNLOAD
-# ----------------------
+
 @app.route("/case/<case_id>", methods=["GET", "POST"])
 def case_detail(case_id):
     # Find case by alphanumeric ID
@@ -201,9 +193,7 @@ def case_download(case_id):
     return send_file(buffer, as_attachment=True, download_name=f"{case.title}.pdf", mimetype="application/pdf")
 
 
-# ----------------------
-# LEADERBOARD / STATIC PAGES
-# ----------------------
+
 @app.route("/leaderboard")
 def leaderboard():
     rows = Leaderboard.query.order_by(Leaderboard.points.desc()).all()
@@ -233,9 +223,7 @@ def admin():
     return render_template("admin.html", cases=Case.query.all(), stats=stats)
 
 
-# ----------------------
-# API ROUTES FOR JS FETCH
-# ----------------------
+
 @app.route("/api/case/<case_id>")
 def api_case(case_id):
     case = Case.query.filter_by(id=case_id).first()
@@ -305,9 +293,6 @@ def api_case_suggestions(case_id):
     return jsonify(details.get("suggestions", []))
 
 
-# ----------------------
-# RUN APP
-# ----------------------
 with app.app_context():
     db.create_all()
 
