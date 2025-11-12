@@ -39,5 +39,5 @@ Built using **Python (Flask)** for the backend and **HTML, CSS, JavaScript, SQL,
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/cluetrail.git
+   git clone https://github.com/Jerryhatescode/cluetrail.git
    cd cluetrail
